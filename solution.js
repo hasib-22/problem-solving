@@ -178,6 +178,231 @@ var runningSum = function (nums) {
     return sumArray
 };
 
+// ==========================================
+// PROBLEM 11:  Richest customer wealth
+// ==========================================
+/**
+ * @param {number[][]} accounts
+ * @return {number}
+ */
+
+var maximumWealth = function (accounts) {
+    return Math.max(...accounts.map(customer => customer.reduce((sum, money) => sum + money, 0)));
+};
+
+// ==========================================
+// PROBLEM 12:  Remove Duplicates from Sorted Array
+// ==========================================
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+
+var removeDuplicates = function (nums) {
+    if (nums.length === 0) return 0
+    let k = 1
+    for (let i = 0; i < nums.length; i++) {
+        if (nums[i] !== nums[k - 1]) {
+            nums[k] = nums[i];
+            k++;
+        }
+    }
+    return k
+};
+
+// ==========================================
+// PROBLEM 13: Contains Duplicate
+// ==========================================
+/**
+ * @param {number[]} nums
+ * @return {boolean}
+*/
+
+var containsDuplicate = function (nums) {
+    const seen = new Set()
+    for (let i = 0; i < nums.length; i++) {
+        if (seen.has(nums[i])) {
+            return true;
+        }
+        seen.add(nums[i]);
+    }
+    return false;
+};
+
+// ==========================================
+// PROBLEM 14: Move Zeroes
+// ==========================================
+/**
+ * @param {number[]} nums
+ * @return {void}
+ */
+
+var moveZeroes = function (nums) {
+    let lastNonZeroFoundAt = 0;
+    for (let i = 0; i < nums.length; i++) {
+        if (nums[i] !== 0) {
+            nums[lastNonZeroFoundAt] = nums[i];
+            lastNonZeroFoundAt++;
+        }
+    }
+    for (let i = lastNonZeroFoundAt; i < nums.length; i++) {
+        nums[i] = 0;
+    }
+};
+
+// ==========================================
+// PROBLEM 15: Merge Sorted Array
+// ==========================================
+/** 
+* @param {number[]} nums1
+* @param {number} m
+* @param {number[]} nums2
+* @param {number} n
+* @return {void}
+*/
+
+var merge = function (nums1, m, nums2, n) {
+    let p1 = m - 1
+    let p2 = n - 1
+    let p = m + n - 1
+    while (p1 >= 0 && p2 >= 0) {
+        if (nums1[p1] > nums2[p2]) {
+            nums1[p] = nums1[p1];
+            p1--;
+        } else {
+            nums1[p] = nums2[p2];
+            p2--;
+        }
+        p--;
+    }
+    while (p2 >= 0) {
+        nums1[p] = nums2[p2];
+        p2--;
+        p--;
+    }
+    console.log(nums1)
+};
+
+// ==========================================
+// PROBLEM 16: 3Sum
+// ==========================================
+/**
+ * @param {number[]} nums
+ * @return {number[][]}
+ */
+
+var threeSum = function (nums) {
+    const triplets = [];
+    nums.sort((a, b) => a - b);
+
+    for (let i = 0; i < nums.length - 2; i++) {
+        if (i > 0 && nums[i] === nums[i - 1]) {
+            continue;
+        }
+
+        let left = i + 1;
+        let right = nums.length - 1;
+
+        while (left < right) {
+            const sum = nums[i] + nums[left] + nums[right];
+
+            if (sum === 0) {
+                triplets.push([nums[i], nums[left], nums[right]]);
+
+                while (left < right && nums[left] === nums[left + 1]) left++;
+                while (left < right && nums[right] === nums[right - 1]) right--;
+
+                left++;
+                right--;
+            } else if (sum < 0) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+    }
+
+    return triplets;
+};
+
+// ==========================================
+// PROBLEM 17: Plus One
+// ==========================================
+/**
+ * @param {number[]} digits
+ * @return {number[]}
+ */
+
+var plusOne = function (digits) {
+    for (let i = digits.length - 1; i >= 0; i--) {
+        if (digits[i] < 9) {
+            digits[i]++;
+            return digits;
+        }
+
+        digits[i] = 0;
+    }
+
+    digits.unshift(1);
+    return digits;
+};
+
+// ==========================================
+// PROBLEM 18: Reverse String
+// ==========================================
+/**
+ * @param {string[]} s
+ * @return {void}
+ */
+
+var reverseString = function (s) {
+    let left = 0;
+    let right = s.length - 1;
+    while (left < right) {
+        const temp = s[left]
+        s[left] = s[right]
+        s[right] = temp
+        left++;
+        right--;
+    }
+
+    console.log(s)
+};
+
+// ==========================================
+// PROBLEM 19: Length of Last Word
+// ==========================================
+/**
+ * @param {string} s
+ * @return {number}
+ */
+
+var lengthOfLastWord = function (s) {
+    const array = s.trim().split(" ")
+    return array[array.length - 1].length
+};
 
 
+// ==========================================
+// PROBLEM 20: Longest Common Prefix
+// ==========================================
+/**
+ * @param {string[]} strs
+ * @return {string}
+ */
 
+var longestCommonPrefix = function (strs) {
+    if (strs.length === 0) return "";
+
+    let prefix = strs[0];
+
+    for (let i = 1; i < strs.length; i++) {
+        while (strs[i].indexOf(prefix) !== 0) {
+            prefix = prefix.slice(0, -1);
+
+            if (prefix === "") return "";
+        }
+    }
+
+    return prefix;
+};
